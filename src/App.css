@@ -1,0 +1,38 @@
+:root{
+  --mainBlue:#2a2a72;
+  --lightBlue:#009ffd;
+  --backgroundTurcuaz:#d5fcfc;
+  --mainWhite:#f3f3f3;
+  --mainDark:#232528;
+  --mainYellow:#f7c973;
+}
+body{
+  font-family: 'Playfair Display', serif !important;
+  background: var(--backgroundTurcuaz) !important;
+  color: var(--mainDark) !important;
+}
+
+.text-title{
+  font-family: 'Playfair Display', serif;
+  letter-spacing: 0.3rem;
+  text-transform: uppercase;
+}
+.text-blue{
+  color: var(--mainBlue);
+}
+.text-bright{
+  color: var(--lightBlue);
+}
+.loginForm{
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+  height: 100%;
+}
+.logoutForm{
+  width: 20%;
+  max-width: 33px;
+  height: 0%;
+  margin: auto;
+}
