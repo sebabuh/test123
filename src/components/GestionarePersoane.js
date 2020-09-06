@@ -9,7 +9,6 @@ async function __addUser(uid, firstName, lastName, asociatie) {
     prenume: lastName,
     id_asociatie: asociatie
   });
-  window.location.reload(false);
 };
 
 class GestionarePersoane extends Component {
@@ -61,6 +60,13 @@ class GestionarePersoane extends Component {
     e.preventDefault();
     create.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u) => {
       __addUser(u.user.uid, this.state.firstName, this.state.lastName, this.state.asociatie);
+      this.setState({
+        ...this.state,
+        email: '',
+        firstName: '',
+        lastName: '',
+        password: ''
+      });
     }).then((u) => {})
       .catch((error) => {
         console.log(error);
@@ -169,19 +175,19 @@ class GestionarePersoane extends Component {
             <h5 className="grey-text text-darken-3">Inregistrare persoana</h5>
             <div className="input-field">
               <label htmlFor="email">Email</label>
-              <input type="email" id='email' onChange={this.handleChange} />
+              <input type="email" id='email' value={this.state.email} onChange={this.handleChange} />
             </div>
             <div className="input-field">
               <label htmlFor="password">Parola</label>
-              <input type="password" id='password' onChange={this.handleChange} />
+              <input type="password" id='password' value={this.state.password} onChange={this.handleChange} />
             </div>
             <div className="input-field">
               <label htmlFor="firstName">Nume</label>
-              <input type="text" id='firstName' onChange={this.handleChange} />
+              <input type="text" id='firstName' value={this.state.firstName} onChange={this.handleChange} />
             </div>
             <div className="input-field">
               <label htmlFor="lastName">Prenume</label>
-              <input type="text" id='lastName' onChange={this.handleChange} />
+              <input type="text" id='lastName' value={this.state.lastName} onChange={this.handleChange} />
             </div>
             <div className="input-field">
               <label htmlFor="asociatie">Asociatie</label>

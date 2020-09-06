@@ -64,14 +64,10 @@ class IncasariSiPlati extends Component {
       });
 
       let locatari = snapshot.docs.map((doc) => {
-        let total = 0;
-        if (doc.id in incasari) {
-          total = incasari[doc.id].total;
-        }
         return {
           _id: doc.id,
           ...doc.data(),
-          total: total
+          ...incasari[doc.id]
         }
       });
 
