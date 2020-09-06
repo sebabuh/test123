@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { db } from './FirebaseConfig';
 import { create } from './FirebaseConfig';
 
-async function __addUser(uid, firstName, lastName, asociatie) {
+async function __addUser(uid, firstName, lastName, asociatie, nr_app, mp) {
   const docRef = db.collection('locatari').doc(uid);
   await docRef.set({
     nume: firstName,
     prenume: lastName,
-    id_asociatie: asociatie
+    id_asociatie: asociatie,
+    nr_apartament: nr_app,
+    mp: mp
   });
 };
 
@@ -26,7 +28,9 @@ class GestionarePersoane extends Component {
       asociatieIDFiltruSelectata: '',
       locatari: [],
       open: false,
-      asociatii: []
+      asociatii: [],
+      nr_apartament: '',
+      mp: ''
     }
   }
 
@@ -59,13 +63,22 @@ class GestionarePersoane extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     create.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u) => {
-      __addUser(u.user.uid, this.state.firstName, this.state.lastName, this.state.asociatie);
+      __addUser(u.user.uid, this.state.firstName, this.state.lastName, this.state.asociatie, this.state.nr_apartament, this.state.mp);
       this.setState({
         ...this.state,
         email: '',
         firstName: '',
         lastName: '',
-        password: ''
+        password: '',
+        nr_apartament: '',
+        mp: '',
+        locatari: [...this.state.locatari, {
+          nume: this.state.firstName,
+          prenume: this.state.lastName,
+          nr_apartament: this.state.nr_apartament,
+          mp: this.state.mp,
+          id_asociatie: this.state.asociatieIDFiltruSelectata
+        }]
       });
     }).then((u) => {})
       .catch((error) => {
@@ -155,7 +168,7 @@ class GestionarePersoane extends Component {
                 <td>{data.nume || "-"}</td>
                 <td>{data.prenume || "-"}</td>
                 <td>{data.nr_apartament || "-"}</td>
-                <td>{data.suprafata_mp || "-"}</td>
+                <td>{data.mp || "-"}</td>
                 <td>{numeAsociatie || "-"}</td>
               </tr>
             );
@@ -188,6 +201,14 @@ class GestionarePersoane extends Component {
             <div className="input-field">
               <label htmlFor="lastName">Prenume</label>
               <input type="text" id='lastName' value={this.state.lastName} onChange={this.handleChange} />
+            </div>
+            <div className="input-field">
+              <label htmlFor="numar_app">Numar apartament</label>
+              <input type="text" id='nr_apartament' value={this.state.nr_apartament} onChange={this.handleChange} />
+            </div>
+            <div className="input-field">
+              <label htmlFor="mp">Metrii patrati</label>
+              <input type="text" id='mp' value={this.state.mp} onChange={this.handleChange} />
             </div>
             <div className="input-field">
               <label htmlFor="asociatie">Asociatie</label>
